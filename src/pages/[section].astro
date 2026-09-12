@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import site from '../config/site.json';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const reserved = new Set(['research', 'people', 'publications', 'news']);
+  const enabled = new Set(site.navigation.filter((n) => n.enabled).map((n) => n.id));
+  const pages = await getCollection('pages');
+  return pages.filter((page) => enabled.has(page.id) && !reserved.has(page.id)).map((page) => ({ params: { section: page.id }, props: { page } }));
+}
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+<BaseLayout title={page.data.title}><SectionHeader {...page.data} /><div class="shell prose section-space"><Content /></div></BaseLayout>

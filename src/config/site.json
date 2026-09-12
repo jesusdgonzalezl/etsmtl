@@ -1,0 +1,35 @@
+{
+  "siteTitle": "Gonzalez Llorente Research Group",
+  "shortTitle": "GL Research",
+  "tagline": "Engineering resilient, intelligent systems for space",
+  "description": "Research in small satellites, spacecraft power systems, autonomy, energy storage, and cyber-physical systems at ÉTS Montréal.",
+  "language": "en",
+  "principalInvestigator": {
+    "name": "Jesus David Gonzalez Llorente",
+    "title": "Professor",
+    "department": "Department of Aerospace Engineering",
+    "institution": "École de technologie supérieure (ÉTS Montréal)",
+    "degrees": "B.Eng. (UNAL), M.Sc. (UPRM), Ph.D. (Kyutech)",
+    "email": "Jesus-David.Gonzalez-Llorente@etsmtl.ca",
+    "photo": "/images/people/jesus-gonzalez-llorente.jpg",
+    "profileUrl": "https://www.etsmtl.ca/en/study-at-ets/professors/jgonzalez-llorente"
+  },
+  "navigation": [
+    { "id": "research", "label": "Research", "enabled": true },
+    { "id": "people", "label": "People", "enabled": true },
+    { "id": "publications", "label": "Publications", "enabled": true },
+    { "id": "news", "label": "News", "enabled": true },
+    { "id": "teaching", "label": "Teaching", "enabled": true },
+    { "id": "opportunities", "label": "Opportunities", "enabled": true },
+    { "id": "contact", "label": "Contact", "enabled": true }
+  ],
+  "socialLinks": [
+    { "label": "ÉTS profile", "url": "https://www.etsmtl.ca/en/study-at-ets/professors/jgonzalez-llorente" }
+  ],
+  "theme": {
+    "accent": "#e31837",
+    "ink": "#151515",
+    "paper": "#ffffff",
+    "muted": "#f1f1ef"
+  }
+}

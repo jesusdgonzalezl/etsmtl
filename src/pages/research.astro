@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { getEntry, render } from 'astro:content';
+const page = await getEntry('pages', 'research');
+if (!page) throw new Error('Missing research page');
+const { Content } = await render(page);
+---
+<BaseLayout title={page.data.title}><SectionHeader {...page.data} /><div class="shell prose section-space"><Content /></div></BaseLayout>

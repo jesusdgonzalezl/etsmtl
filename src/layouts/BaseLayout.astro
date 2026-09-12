@@ -1,0 +1,54 @@
+---
+import site from '../config/site.json';
+import '../styles/global.css';
+
+interface Props { title?: string; description?: string; }
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} — ${site.shortTitle}` : site.siteTitle;
+const currentPath = Astro.url.pathname.replace(import.meta.env.BASE_URL, '/');
+const nav = site.navigation.filter((item) => item.enabled);
+---
+<!doctype html>
+<html lang={site.language} style={`--accent:${site.theme.accent};--ink:${site.theme.ink};--paper:${site.theme.paper};--muted:${site.theme.muted}`}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={site.theme.accent} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="institution-bar"><div class="shell">{site.principalInvestigator.institution}</div></div>
+      <div class="shell nav-row">
+        <a class="brand" href={import.meta.env.BASE_URL} aria-label={`${site.siteTitle} home`}>
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>{site.shortTitle}</span>
+        </a>
+        <button class="menu-button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav id="site-nav" aria-label="Primary navigation">
+          <a class:list={{ active: currentPath === '/' }} href={import.meta.env.BASE_URL}>Home</a>
+          {nav.map((item) => <a class:list={{ active: currentPath.startsWith(`/${item.id}`) }} href={`${import.meta.env.BASE_URL}${item.id}/`}>{item.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer>
+      <div class="shell footer-grid">
+        <div><strong>{site.siteTitle}</strong><p>{site.principalInvestigator.department}<br />{site.principalInvestigator.institution}</p></div>
+        <div><strong>Contact</strong><p><a href={`mailto:${site.principalInvestigator.email}`}>{site.principalInvestigator.email}</a></p></div>
+        <div><strong>Profiles</strong>{site.socialLinks.map((link) => <p><a href={link.url}>{link.label} ↗</a></p>)}</div>
+      </div>
+    </footer>
+    <script>
+      const button = document.querySelector('.menu-button');
+      const nav = document.querySelector('#site-nav');
+      button?.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!expanded));
+        nav?.classList.toggle('open');
+      });
+    </script>
+  </body>
+</html>

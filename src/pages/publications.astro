@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { getCollection, getEntry } from 'astro:content';
+const page = await getEntry('pages', 'publications');
+if (!page) throw new Error('Missing publications page');
+const pubs = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year || a.data.title.localeCompare(b.data.title));
+const years = [...new Set(pubs.map((p) => p.data.year))];
+---
+<BaseLayout title={page.data.title}><SectionHeader {...page.data} /><div class="shell section-space publication-list">{years.map((year) => <section><h2>{year}</h2>{pubs.filter((p) => p.data.year === year).map((pub) => <article><p class="meta">{pub.data.type}</p><h3>{pub.data.url ? <a href={pub.data.url}>{pub.data.title} ↗</a> : pub.data.title}</h3><p>{pub.data.authors.join(', ')}</p><p class="small">{pub.data.venue}{pub.data.doi && <> · DOI: {pub.data.doi}</>}</p></article>)}</section>)}</div></BaseLayout>
